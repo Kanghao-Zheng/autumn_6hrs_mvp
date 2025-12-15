@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Autumn Hotel OS (MVP)
 
-## Getting Started
+Autumn is a "Neuro-Symbolic" revenue management MVP:
+- A deterministic pricing engine (pure function) produces explainable daily rates.
+- An AI "Autopilot" proposes strategy parameter changes via Generative UI (Diff Cards).
+- A dashboard visualizes historical occupancy and market context, and shows projections only after strategy approval.
 
-First, run the development server:
+## Tech Stack
+- Next.js 14 (App Router) + React 18 + TypeScript
+- Tailwind + shadcn/ui
+- Vercel AI SDK (`ai/rsc`) + OpenAI provider (`@ai-sdk/openai`)
+- Recharts for visualization
+- Local persistence via `db.json` (Server Actions) + Zod schemas (`lib/schema.ts`)
 
+## Run Locally
+
+Prereqs:
+- Node.js 18.17+ (or 20+)
+- An OpenAI API key
+
+1) Install dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2) Set env vars
+```bash
+cp .env.example .env.local
+```
+Then edit `.env.local` and set:
+```
+OPENAI_API_KEY=...
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3) Start the dev server
+```bash
+npm run dev
+```
+Open `http://localhost:3000`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4) Load data (choose one)
+- Upload your reservation CSV in the onboarding overlay, or
+- Click "Use Demo Data", or
+- Run a demo seed from the terminal:
+```bash
+npm run seed
+```
 
-## Learn More
+5) Reset the local database (optional)
+```bash
+npm run reset-db
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Production Build
+```bash
+npm run build
+npm run start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Data & Secrets (Public Repo Safe)
+- Never commit `.env.local` or API keys. Use `.env.example` as a template.
+- `db.json` and real hotel CSVs are intentionally ignored by git.
+- If you ever committed a key, rotate it immediately and purge git history before going public.

@@ -32,6 +32,18 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# markdown docs (keep README)
+*.md
+!README.md
+
+# local state + user data (do not commit)
+db.json
+data/*.csv
+data/*.json
+!data/*.sample.csv
+!data/*.sample.json
 
 # vercel
 .vercel
